@@ -23,11 +23,11 @@ namespace Arrays
 
         static void Menu()
         {
+            Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("Current Weapon: " + guns[currentWeapon]);
             Console.WriteLine("");
             Console.WriteLine("Current Ammo: ");
-            Console.WriteLine("");
             Console.WriteLine(guns[0] + ": " + ammunition[0]);
             Console.WriteLine(guns[1] + ": " + ammunition[1]);
             Console.WriteLine(guns[2] + ": " + ammunition[2]);
@@ -41,7 +41,7 @@ namespace Arrays
 
             ConsoleKeyInfo choice;
 
-            choice = Console.ReadKey();
+            choice = Console.ReadKey(true);
 
             switch (choice.Key)
             {
@@ -70,42 +70,81 @@ namespace Arrays
 
             if (ammunition[currentWeapon] > 0)
             {
+                Console.WriteLine("");
                 Console.WriteLine("You fired your " + guns[currentWeapon] + "!");
+                Pause();
                 ammunition[currentWeapon] = ammunition[currentWeapon] - 1;
 
             }
 
             else
             {
-                Console.WriteLine("You are out of ammo for your " + guns[currentWeapon]);
+                Console.WriteLine("You are out of ammo for your " + guns[currentWeapon] + "!");
+                Pause();
             }
         }
 
         static void switchWeapon()
         {
-            Console.WriteLine("");
-            Console.WriteLine("Which weapon do you choose?");
-            Console.WriteLine("(1)" + guns[0]);
-            Console.WriteLine("(2)" + guns[1]);
-            Console.WriteLine("(3)" + guns[2]);
-            Console.WriteLine("");
+            bool valid = false;
 
-            ConsoleKeyInfo choice;
-            choice = Console.ReadKey();
-
-            bool valid = true;
-
-            while (valid == true)
+            while (valid == false)
             {
+                Console.Clear();
+                Console.WriteLine("");
+                Console.WriteLine("Which weapon do you choose?");
+                Console.WriteLine("");
+                Console.WriteLine("(1)" + guns[0]);
+                Console.WriteLine("(2)" + guns[1]);
+                Console.WriteLine("(3)" + guns[2]);
+                Console.WriteLine("");
+
+                ConsoleKeyInfo choice;
+                choice = Console.ReadKey(true);
+
                 switch (choice.Key)
                 {
                     case ConsoleKey.D1:
+                        currentWeapon = 0;
+                        valid = true;
+                        break;
 
-                    break;
+                    case ConsoleKey.D2:
+                        currentWeapon = 1;
+                        valid = true;
+                        break;
+
+                    case ConsoleKey.D3:
+                        currentWeapon = 2;
+                        valid = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("");
+                        Console.WriteLine("Please make a valid choice.");
+                        Pause();
+                        break;
                 }
             }
+        }
 
+        static void Pause()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to continue.");
+            Console.WriteLine("");
+            Console.ReadKey(true);
+        }
 
+        static void restockAmmo()
+        {
+            ammunition[0] = 5;
+            ammunition[1] = 5;
+            ammunition[2] = 5;
+
+            Console.WriteLine("");
+            Console.WriteLine("Your ammo has been restocked.");
+            Pause();
         }
     }
 }
